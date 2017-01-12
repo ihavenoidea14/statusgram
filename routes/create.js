@@ -4,7 +4,6 @@ var express = require('express');
 var router = express.Router();
 
 router.post('/', function(req, res) {
-  //console.log(req.body);
 
   doc = new PDFDocument();
 
@@ -244,6 +243,8 @@ router.post('/', function(req, res) {
 
   stream.on('finish', function() {
     res.end();
+    stream.destroy();
+    doc = null;
   });
 
 });
