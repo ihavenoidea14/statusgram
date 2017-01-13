@@ -174,14 +174,19 @@ router.post('/', function(req, res) {
   * Fields: SubProp.FullAddress, SubProp.Street, SubProp.CityStateZip, Loan.PurPrice, Purchase.ContractDate, Loan.IntRate, Loan.LockExpirationDate
   *
   */
+  var formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2
+  });
 
   doc.fontSize(8).fillColor('#004990')
     .text(req.body.propstreet, 418, 457);
   doc.text(req.body.propcsz, 418, 467, { lineBreak: false });
-  doc.text(req.body.propprice, 418, 487);
-  doc.text(req.body.propclosing, 500, 487, { lineBreak: false });
+  doc.text(formatter.format(req.body.propprice), 418, 487);
+  doc.text(new Date(req.body.propclosing).toLocaleDateString(), 500, 487, { lineBreak: false });
   doc.text(req.body.propintrate, 420, 527);
-  doc.text(req.body.proplockexp, 500, 527, { lineBreak: false });
+  doc.text(new Date(req.body.proplockexp).toLocaleDateString(), 500, 527, { lineBreak: false });
 
 
   /*

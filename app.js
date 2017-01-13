@@ -11,7 +11,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', creates);
-app.use('/download', downloads);
+app.use('/api/v1', creates);
+app.use('/api/v1/download', downloads);
 
 module.exports = app;
