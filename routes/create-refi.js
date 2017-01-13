@@ -1,13 +1,14 @@
 'use strict';
 
-var PDFDocument = require('pdfkit');
-var fs = require('fs');
 var express = require('express');
 var router = express.Router();
+var PDFDocument = require('pdfkit');
+var fs = require('fs');
+var formatter = require('../services/currencyformat.js');
 
 router.post('/', function(req, res) {
 
-  var doc = new PDFDocument();
+  doc = new PDFDocument();
 
   var stream = doc.pipe(fs.createWriteStream('./output/StatusGram.pdf'));
 
@@ -15,7 +16,7 @@ router.post('/', function(req, res) {
   * StatusGram Watermark
   */
 
-  doc.image('./img/statusgramwatermark.png', 0, 0, { scale: 0.721 });
+  doc.image('./img/statusgramrefi.png', 0, 0, { scale: 0.721 });
 
 
   /*
@@ -41,7 +42,7 @@ router.post('/', function(req, res) {
   */
 
   doc.fontSize(7).fillColor('#004990')
-    .text(req.body.loanNumber, 552, 45, { lineBreak: false });
+    .text(req.body.loanNumber, 548, 45, { lineBreak: false });
 
 
   /*
@@ -52,8 +53,7 @@ router.post('/', function(req, res) {
   */
 
   doc.fontSize(12).fillColor('#004990')
-    .text('Hi ' + req.body.name + ', it\'s our pleasure to finance your purchase with ' + req.body.morttype + '.', 43, 132);
-  doc.text('We can\'t wait until you own ' + req.body.propfull + '!', 43, 147);
+    .text('Hi ' + req.body.name + ', it\'s our pleasure to finance your purchase with a ' + req.body.morttype + ' Loan.', 43, 142)
 
 
   /*
@@ -64,19 +64,19 @@ router.post('/', function(req, res) {
   */
 
   // Col 1
-  doc.image('./img/checkbox.jpg', 25, 250, { scale: 0.33 });
-  doc.image('./img/checkbox.jpg', 25, 273, { scale: 0.33 });
-  doc.image('./img/checkbox.jpg', 25, 297, { scale: 0.33 });
+  doc.image('./img/checkbox.jpg', 25, 260, { scale: 0.33 });
+  doc.image('./img/checkbox.jpg', 25, 283, { scale: 0.33 });
+  doc.image('./img/checkbox.jpg', 25, 307, { scale: 0.33 });
 
   // Col 2
-  doc.image('./img/checkbox.jpg', 222, 250, { scale: 0.33 });
-  doc.image('./img/checkbox.jpg', 222, 273, { scale: 0.33 });
-  doc.image('./img/checkbox.jpg', 222, 297, { scale: 0.33 });
+  doc.image('./img/checkbox.jpg', 222, 260, { scale: 0.33 });
+  doc.image('./img/checkbox.jpg', 222, 283, { scale: 0.33 });
+  doc.image('./img/checkbox.jpg', 222, 307, { scale: 0.33 });
 
   // Col 3
-  doc.image('./img/checkbox.jpg', 420, 250, { scale: 0.33 });
-  doc.image('./img/checkbox.jpg', 420, 273, { scale: 0.33 });
-  doc.image('./img/checkbox.jpg', 420, 297, { scale: 0.33 });
+  doc.image('./img/checkbox.jpg', 420, 260, { scale: 0.33 });
+  doc.image('./img/checkbox.jpg', 420, 283, { scale: 0.33 });
+  doc.image('./img/checkbox.jpg', 420, 307, { scale: 0.33 });
 
 
   /*
@@ -99,8 +99,8 @@ router.post('/', function(req, res) {
   */
 
   doc.fontSize(8).fillColor('#004990')
-    .text('For your protection and ours, the u/w is now (or will be shortly) reviewing this report for accuracy and to validate the appraiser\'s opinion of value.', 25, 206, { width: 174, align: 'left' });
-  doc.text(req.body.appraiser, 25, 330, { width: 170, align: 'center' });
+    .text('For your protection and ours, the u/w is now (or will be shortly) reviewing this report for accuracy and to validate the appraiser\'s opinion of value.', 25, 215, { width: 174, align: 'left' });
+  doc.text(req.body.appraiser, 23, 340, { width: 170, align: 'center' });
 
 
   /*
@@ -123,11 +123,11 @@ router.post('/', function(req, res) {
   */
 
   doc.fontSize(8).fillColor('#004990')
-    .text('To protect your investment and ours, we are making sure your coverage is sufficient.', 222, 206, { width: 174, align: 'left' });
-  doc.text(req.body.hazco, 222, 330, { width: 170, align: 'center' });
-  doc.text(req.body.hazconame, 265, 367);
-  doc.text(req.body.hazcophone, 265, 377);
-  doc.text(req.body.hazcoemail, 265, 387);
+    .text('To protect your investment and ours, we are making sure your coverage is sufficient.', 222, 215, { width: 174, align: 'left' });
+  doc.text(req.body.hazco, 222, 340, { width: 170, align: 'center' });
+  doc.text(req.body.hazconame, 265, 377);
+  doc.text(req.body.hazcophone, 265, 387);
+  doc.text(req.body.hazcoemail, 265, 397);
 
 
   /*
@@ -150,11 +150,11 @@ router.post('/', function(req, res) {
   */
 
   doc.fontSize(8).fillColor('#004990')
-    .text('We are currently dotting the I\'s and crossing the T\'s for your ownership docs.', 418, 206, { width: 174, align: 'left' });
-  doc.text(req.body.titleco, 418, 330, { width: 170, align: 'center' });
-  doc.text(req.body.titleconame, 460, 367, { lineBreak: false });
-  doc.text(req.body.titlecophone, 460, 377, { lineBreak: false });
-  doc.text(req.body.titlecoemail, 460, 387, { lineBreak: false });
+    .text('We are currently dotting the I\'s and crossing the T\'s for your ownership docs.', 418, 215, { width: 174, align: 'left' });
+  doc.text(req.body.titleco, 418, 340, { width: 170, align: 'center' });
+  doc.text(req.body.titleconame, 460, 377, { lineBreak: false });
+  doc.text(req.body.titlecophone, 460, 387, { lineBreak: false });
+  doc.text(req.body.titlecoemail, 460, 397, { lineBreak: false });
 
 
   /*
@@ -165,7 +165,7 @@ router.post('/', function(req, res) {
   */
 
   doc.fontSize(8).fillColor('#004990')
-    .text(req.body.lonotes, 25, 439, { width: 370, align: 'left'});
+    .text(req.body.lonotes, 25, 448, { width: 370, align: 'left'});
 
 
   /*
@@ -174,19 +174,12 @@ router.post('/', function(req, res) {
   * Fields: SubProp.FullAddress, SubProp.Street, SubProp.CityStateZip, Loan.PurPrice, Purchase.ContractDate, Loan.IntRate, Loan.LockExpirationDate
   *
   */
-  var formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2
-  });
 
   doc.fontSize(8).fillColor('#004990')
-    .text(req.body.propstreet, 418, 457);
-  doc.text(req.body.propcsz, 418, 467, { lineBreak: false });
-  doc.text(formatter.format(req.body.propprice), 418, 487);
-  doc.text(new Date(req.body.propclosing).toLocaleDateString(), 500, 487, { lineBreak: false });
-  doc.text(req.body.propintrate, 420, 527);
-  doc.text(new Date(req.body.proplockexp).toLocaleDateString(), 500, 527, { lineBreak: false });
+    .text(formatter.format(req.body.propprice), 420, 590);
+  doc.text(new Date(req.body.propclosing).toLocaleDateString(), 500, 590, { lineBreak: false });
+  doc.text(req.body.propintrate, 420, 623);
+  doc.text(new Date(req.body.proplockexp).toLocaleDateString(), 500, 623, { lineBreak: false });
 
 
   /*
@@ -197,10 +190,10 @@ router.post('/', function(req, res) {
   */
 
   doc.fontSize(8).fillColor('#004990')
-    .text(req.body.loname, 72, 605);
-  doc.text('NMLS: ' + req.body.lonmls, 72, 615);
-  doc.text(req.body.lophone, 72, 625);
-  doc.text(req.body.loemail, 72, 635);
+    .text(req.body.loname, 72, 595);
+  doc.text('NMLS: ' + req.body.lonmls, 72, 605);
+  doc.text(req.body.lophone, 72, 615);
+  doc.text(req.body.loemail, 72, 625);
 
 
   /*
@@ -212,24 +205,10 @@ router.post('/', function(req, res) {
   */
 
   doc.fontSize(8).fillColor('#004990')
-    .text(req.body.rhpname, 265, 605);
-  doc.text('NMLS: ' + req.body.rhpnmls, 265, 615);
-  doc.text(req.body.rhpphone, 265, 625);
-  doc.text(req.body.rhpemail, 265, 635);
-
-
-  /*
-  * Real Estate Agent
-  *
-  * Fields: SelAgent.FirstAndLastName, SelAgent.WorkPhoneFormatted, SelAgent.EMail, SelAgent.Company, SelAgent.MobilePhoneFormatted
-  *
-  */
-
-  doc.fontSize(8).fillColor('#004990')
-    .text(req.body.selagentname, 458, 605);
-  doc.text(req.body.selagentco, 458, 615);
-  doc.text(req.body.selagentphone, 458, 625, { lineBreak: false });
-  doc.text(req.body.selagentemail, 458, 635, { lineBreak: false });
+    .text(req.body.rhpname, 265, 595);
+  doc.text('NMLS: ' + req.body.rhpnmls, 265, 605);
+  doc.text(req.body.rhpphone, 265, 615);
+  doc.text(req.body.rhpemail, 265, 625);
 
 
   /*
@@ -240,21 +219,17 @@ router.post('/', function(req, res) {
   */
 
   doc.fontSize(10).fillColor('#004990')
-    .text(req.body.userinfoname, 210, 725, { lineBreak: false });
+    .text(req.body.userinfoname, 269, 725, { lineBreak: false });
   doc.text('Phone: ' + req.body.userinfophone, 255, 739, { lineBreak: false });
   doc.text('NMLS# ' + req.body.userinfonmls, 272, 753, { lineBreak: false });
 
   doc.save();
-
   doc.end();
 
   stream.on('finish', function() {
-    res.end();
     stream.destroy();
     doc = null;
   });
-
 });
 
 module.exports = router;
-  
