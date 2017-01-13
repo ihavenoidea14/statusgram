@@ -1,3 +1,5 @@
+'use strict';
+
 var PDFDocument = require('pdfkit');
 var fs = require('fs');
 var express = require('express');
@@ -5,7 +7,7 @@ var router = express.Router();
 
 router.post('/', function(req, res) {
 
-  doc = new PDFDocument();
+  var doc = new PDFDocument();
 
   var stream = doc.pipe(fs.createWriteStream('./output/StatusGram.pdf'));
 
