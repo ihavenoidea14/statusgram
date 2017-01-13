@@ -8,7 +8,7 @@ var formatter = require('../services/currencyformat.js');
 
 router.post('/', function(req, res) {
 
-  doc = new PDFDocument();
+  var doc = new PDFDocument();
 
   var stream = doc.pipe(fs.createWriteStream('./output/StatusGram.pdf'));
 
@@ -42,7 +42,7 @@ router.post('/', function(req, res) {
   */
 
   doc.fontSize(7).fillColor('#004990')
-    .text(req.body.loanNumber, 548, 45, { lineBreak: false });
+    .text(req.body.loanNumber, 552, 45, { lineBreak: false });
 
 
   /*
@@ -53,7 +53,7 @@ router.post('/', function(req, res) {
   */
 
   doc.fontSize(12).fillColor('#004990')
-    .text('Hi ' + req.body.name + ', it\'s our pleasure to finance your purchase with a ' + req.body.morttype + ' Loan.', 43, 142)
+    .text('Hi ' + req.body.name + ', it\'s our pleasure to finance your purchase with a ' + req.body.morttype + ' Loan.', 43, 142);
 
 
   /*
@@ -219,7 +219,7 @@ router.post('/', function(req, res) {
   */
 
   doc.fontSize(10).fillColor('#004990')
-    .text(req.body.userinfoname, 269, 725, { lineBreak: false });
+    .text(req.body.userinfoname, 203, 725, { lineBreak: false });
   doc.text('Phone: ' + req.body.userinfophone, 255, 739, { lineBreak: false });
   doc.text('NMLS# ' + req.body.userinfonmls, 272, 753, { lineBreak: false });
 
@@ -227,6 +227,7 @@ router.post('/', function(req, res) {
   doc.end();
 
   stream.on('finish', function() {
+    res.end();
     stream.destroy();
     doc = null;
   });
