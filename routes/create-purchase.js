@@ -65,19 +65,45 @@ router.post('/', function(req, res) {
   */
 
   // Col 1
-  doc.image('./img/checkbox.jpg', 25, 250, { scale: 0.33 });
-  doc.image('./img/checkbox.jpg', 25, 273, { scale: 0.33 });
-  doc.image('./img/checkbox.jpg', 25, 297, { scale: 0.33 });
+  if (req.body.appraisalcleared) {
+    doc.image('./img/checkbox.jpg', 25, 297, { scale: 0.33 });
+  }
+  
+  if (req.body.appraisalrecd) {
+    doc.image('./img/checkbox.jpg', 25, 273, { scale: 0.33 });
+  }
+  
+  if (req.body.appraisalordered) {
+    doc.image('./img/checkbox.jpg', 25, 250, { scale: 0.33 });
+  }
+
 
   // Col 2
-  doc.image('./img/checkbox.jpg', 222, 250, { scale: 0.33 });
-  doc.image('./img/checkbox.jpg', 222, 273, { scale: 0.33 });
-  doc.image('./img/checkbox.jpg', 222, 297, { scale: 0.33 });
+  if (req.body.hazcleared) {
+    doc.image('./img/checkbox.jpg', 222, 297, { scale: 0.33 });
+  }
+  
+  if (req.body.hazrecd) {
+    doc.image('./img/checkbox.jpg', 222, 273, { scale: 0.33 });
+  }
+  
+  if (req.body.hazordered) {
+    doc.image('./img/checkbox.jpg', 222, 250, { scale: 0.33 });
+  }
+
 
   // Col 3
-  doc.image('./img/checkbox.jpg', 420, 250, { scale: 0.33 });
-  doc.image('./img/checkbox.jpg', 420, 273, { scale: 0.33 });
-  doc.image('./img/checkbox.jpg', 420, 297, { scale: 0.33 });
+  if (req.body.titlecleared) {
+    doc.image('./img/checkbox.jpg', 420, 297, { scale: 0.33 });
+  }
+  
+  if (req.body.titlerecd) {
+    doc.image('./img/checkbox.jpg', 420, 273, { scale: 0.33 });
+  }
+  
+  if (req.body.titleordered) {
+    doc.image('./img/checkbox.jpg', 420, 250, { scale: 0.33 });
+  }
 
 
   /*
@@ -236,9 +262,9 @@ router.post('/', function(req, res) {
   */
 
   doc.fontSize(10).fillColor('#004990')
-    .text(req.body.userinfoname, 210, 725, { lineBreak: false });
-  doc.text('Phone: ' + req.body.userinfophone, 255, 739, { lineBreak: false });
-  doc.text('NMLS# ' + req.body.userinfonmls, 272, 753, { lineBreak: false });
+    .text(req.body.userinfoname, 165, 725, { width: 300, height: 10, align: 'center', lineBreak: false });
+  doc.text('Phone: ' + req.body.userinfophone, 165, 739, { width: 300, height: 10, align: 'center', lineBreak: false });
+  doc.text('NMLS# ' + req.body.userinfonmls, 165, 753, { width: 300, height: 10, align: 'center', lineBreak: false });
 
   doc.save();
 

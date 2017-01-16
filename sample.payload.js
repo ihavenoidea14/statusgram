@@ -34,13 +34,17 @@
  "\",\"userinfophone\": \"" + userinfophone + 
  "\",\"userinfonmls\": \"" + userinfonmls + 
  "\",\"propfull\": \"" + propfull + 
+
  "\",\"appraisalordered\": \"" + los.GetField('Status.AppraisalOrdered') + 
  "\",\"appraisalrecd\": \"" + los.GetField('Status.AppraisalReceived') + 
  "\",\"appraisalcleared\": \"" + los.GetField('ExtendedFields.AppraisalCleared') + 
+
  "\",\"hazordered\": \"" + los.GetField('Status.HazardOrdered') + 
  "\",\"hazrecd\": \"" + los.GetField('Status.HazardReceived') + 
  "\",\"hazcleared\": \"" + los.GetField('ExtendedFields.HazardCleared') + 
+
  "\",\"titleordered\": \"" + los.GetField('Status.TitleOrdered') + 
  "\",\"titlerecd\": \"" + los.GetField('Status.TitleReceived') + 
  "\",\"titlecleared\": \"" + los.GetField('ExtendedFields.TitleClearedDate1') + 
+ 
  "\",\"morttype\": \"" + morttype + "\"\}";

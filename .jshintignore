@@ -2,3 +2,5 @@
 /test/
 /public/
 /output/
+./sample.payload.js
+./services/currencyformat.js
