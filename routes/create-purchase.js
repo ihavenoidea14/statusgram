@@ -65,43 +65,43 @@ router.post('/', function(req, res) {
   */
 
   // Col 1
-  if (req.body.appraisalcleared) {
+  if (req.body.appraisalcleared !== 'undefined') {
     doc.image('./img/checkbox.jpg', 25, 297, { scale: 0.33 });
   }
   
-  if (req.body.appraisalrecd) {
+  if (req.body.appraisalrecd !== 'undefined') {
     doc.image('./img/checkbox.jpg', 25, 273, { scale: 0.33 });
   }
   
-  if (req.body.appraisalordered) {
+  if (req.body.appraisalordered !== 'undefined') {
     doc.image('./img/checkbox.jpg', 25, 250, { scale: 0.33 });
   }
 
 
   // Col 2
-  if (req.body.hazcleared) {
+  if (req.body.hazcleared !== 'undefined') {
     doc.image('./img/checkbox.jpg', 222, 297, { scale: 0.33 });
   }
   
-  if (req.body.hazrecd) {
+  if (req.body.hazrecd !== 'undefined') {
     doc.image('./img/checkbox.jpg', 222, 273, { scale: 0.33 });
   }
   
-  if (req.body.hazordered) {
+  if (req.body.hazordered !== 'undefined') {
     doc.image('./img/checkbox.jpg', 222, 250, { scale: 0.33 });
   }
 
 
   // Col 3
-  if (req.body.titlecleared) {
+  if (req.body.titlecleared !== 'undefined') {
     doc.image('./img/checkbox.jpg', 420, 297, { scale: 0.33 });
   }
   
-  if (req.body.titlerecd) {
+  if (req.body.titlerecd !== 'undefined') {
     doc.image('./img/checkbox.jpg', 420, 273, { scale: 0.33 });
   }
   
-  if (req.body.titleordered) {
+  if (req.body.titleordered !== 'undefined') {
     doc.image('./img/checkbox.jpg', 420, 250, { scale: 0.33 });
   }
 
@@ -205,10 +205,22 @@ router.post('/', function(req, res) {
   doc.fontSize(8).fillColor('#004990')
     .text(req.body.propstreet, 418, 457);
   doc.text(req.body.propcsz, 418, 467, { lineBreak: false });
-  doc.text(formatter.format(req.body.propprice), 418, 487);
-  doc.text(new Date(req.body.propclosing).toLocaleDateString(), 500, 487, { lineBreak: false });
-  doc.text(req.body.propintrate, 420, 527);
-  doc.text(new Date(req.body.proplockexp).toLocaleDateString(), 500, 527, { lineBreak: false });
+
+  if (req.body.propprice !== 'undefined') {
+    doc.text(formatter.format(req.body.propprice), 418, 487);
+  }
+
+  if (req.body.propclosing !== 'undefined') {
+    doc.text(new Date(req.body.propclosing).toLocaleDateString(), 500, 487, { lineBreak: false });
+  }
+
+  if (req.body.propintrate !== 'undefined') {
+    doc.text(req.body.propintrate + '%', 420, 527);
+  }
+
+  if (req.body.proplockexp !== 'undefined') {
+    doc.text(new Date(req.body.proplockexp).toLocaleDateString(), 500, 527, { lineBreak: false });
+  }
 
 
   /*
@@ -237,7 +249,7 @@ router.post('/', function(req, res) {
     .text(req.body.rhpname, 265, 605);
   doc.text('NMLS: ' + req.body.rhpnmls, 265, 615);
   doc.text(req.body.rhpphone, 265, 625);
-  doc.text(req.body.rhpemail, 265, 635);
+  doc.text(req.body.rhpemail, 265, 635, { width: 135 });
 
 
   /*
@@ -249,7 +261,7 @@ router.post('/', function(req, res) {
 
   doc.fontSize(8).fillColor('#004990')
     .text(req.body.selagentname, 458, 605);
-  doc.text(req.body.selagentco, 458, 615);
+  doc.text(req.body.selagentco, 458, 615, { lineBreak: false });
   doc.text(req.body.selagentphone, 458, 625, { lineBreak: false });
   doc.text(req.body.selagentemail, 458, 635, { lineBreak: false });
 
