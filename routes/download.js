@@ -7,11 +7,11 @@ var router = express.Router();
 router.get('/', function(req, res) {
   res.download('./output/StatusGram.pdf');
 
-  // if (process.env.COMPUTERNAME !== 'A004651') {
-  //   res.on('finish', function() {
-  //     fs.unlinkSync('./output/StatusGram.pdf');
-  //   });
-  // }
+  if (process.env.NODE_ENV === 'Production') {
+    res.on('finish', function() {
+      fs.unlinkSync('./output/StatusGram.pdf');
+    });
+  }
   
 });
 
