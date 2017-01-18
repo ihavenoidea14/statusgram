@@ -211,7 +211,7 @@ router.post('/', function(req, res) {
   *
   */
 
-  doc.fontSize(8).fillColor('#004990')
+  doc.fontSize(8).fillColor('#004990');
 
   if (req.body.propprice !== 'undefined') {
     doc.text(formatter.format(req.body.propprice), 420, 590);
