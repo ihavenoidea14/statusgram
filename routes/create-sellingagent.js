@@ -31,7 +31,17 @@ router.post('/', function(req, res) {
   * 
   */
 
-  doc.image('./img/closed.jpg', 16, 88, { scale: 0.24066 });
+  var status = {
+    14: './img/closed.jpg',
+    17: './img/docs-sent.jpg',
+    54: './img/ctc.jpg',
+    5: './img/cond-approved.jpg',
+    3: './img/in-underwriting.jpg'
+  };
+
+  var image = status[req.body.loanstatus] || './img/app-taken.jpg';
+
+  doc.image(image, 16, 88, { scale: 0.24066 });
 
 
   /*
@@ -53,7 +63,7 @@ router.post('/', function(req, res) {
   */
 
   doc.fontSize(12).fillColor('#004990')
-    .text('Hi ' + req.body.name + ', it\'s our pleasure to finance the purchase of ' + req.body.propfull + ' for ' + req.body.name + '.', 43, 132);
+    .text('Hi ' + req.body.selagentname + ', it\'s our pleasure to finance the purchase of ' + req.body.propfull + ' for ' + req.body.name + '.', 43, 132);
 
 
   /*
@@ -151,9 +161,9 @@ router.post('/', function(req, res) {
   doc.fontSize(8).fillColor('#004990')
     .text('To protect your investment and ours, we are making sure your coverage is sufficient.', 222, 206, { width: 174, align: 'left' });
   doc.text(req.body.hazco, 222, 330, { width: 170, align: 'center' });
-  doc.text(req.body.hazconame, 265, 367);
-  doc.text(req.body.hazcophone, 265, 377);
-  doc.text(req.body.hazcoemail, 265, 387);
+  // doc.text(req.body.hazconame, 265, 367);
+  // doc.text(req.body.hazcophone, 265, 377);
+  // doc.text(req.body.hazcoemail, 265, 387);
 
 
   /*
