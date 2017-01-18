@@ -40,6 +40,11 @@ router.post('/', function(req, res) {
 
   var status = {
     14: './img/closed.jpg',
+    15: './img/closed.jpg',
+    16: './img/closed.jpg',
+    60: './img/closed.jpg',
+    61: './img/closed.jpg',
+    51: './img/closed.jpg',
     17: './img/docs-sent.jpg',
     54: './img/ctc.jpg',
     5: './img/cond-approved.jpg',
@@ -70,8 +75,7 @@ router.post('/', function(req, res) {
   */
 
   doc.fontSize(12).fillColor('#004990')
-    .text('Hi ' + req.body.name + ', it\'s our pleasure to finance your purchase with ' + req.body.morttype + '.', 43, 132);
-  doc.text('We can\'t wait until you own ' + req.body.propfull + '!', 43, 147);
+    .text(`Hi ${req.body.name}, it's our pleasure to finance your purchase with ${req.body.morttype}. We can't wait until you own ${req.body.propfull}!`, 43, 132);
 
 
   /*

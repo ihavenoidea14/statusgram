@@ -33,6 +33,11 @@ router.post('/', function(req, res) {
 
   var status = {
     14: './img/closed.jpg',
+    15: './img/closed.jpg',
+    16: './img/closed.jpg',
+    60: './img/closed.jpg',
+    61: './img/closed.jpg',
+    51: './img/closed.jpg',
     17: './img/docs-sent.jpg',
     54: './img/ctc.jpg',
     5: './img/cond-approved.jpg',
@@ -74,44 +79,44 @@ router.post('/', function(req, res) {
   */
 
   // Col 1
-  if (req.body.appraisalcleared) {
-    doc.image('./img/checkbox.jpg', 25, 307, { scale: 0.33 });
+  if (req.body.appraisalcleared !== 'undefined') {
+    doc.image('./img/checkbox.jpg', 25, 297, { scale: 0.33 });
   }
   
-  if (req.body.appraisalrecd) {
-    doc.image('./img/checkbox.jpg', 25, 283, { scale: 0.33 });
+  if (req.body.appraisalrecd !== 'undefined') {
+    doc.image('./img/checkbox.jpg', 25, 273, { scale: 0.33 });
   }
   
-  if (req.body.appraisalordered) {
-    doc.image('./img/checkbox.jpg', 25, 260, { scale: 0.33 });
+  if (req.body.appraisalordered !== 'undefined') {
+    doc.image('./img/checkbox.jpg', 25, 250, { scale: 0.33 });
   }
 
 
   // Col 2
-  if (req.body.hazcleared) {
-    doc.image('./img/checkbox.jpg', 222, 307, { scale: 0.33 });
+  if (req.body.hazcleared !== 'undefined') {
+    doc.image('./img/checkbox.jpg', 222, 297, { scale: 0.33 });
   }
   
-  if (req.body.hazrecd) {
-    doc.image('./img/checkbox.jpg', 222, 283, { scale: 0.33 });
+  if (req.body.hazrecd !== 'undefined') {
+    doc.image('./img/checkbox.jpg', 222, 273, { scale: 0.33 });
   }
   
-  if (req.body.hazordered) {
-    doc.image('./img/checkbox.jpg', 222, 260, { scale: 0.33 });
+  if (req.body.hazordered !== 'undefined') {
+    doc.image('./img/checkbox.jpg', 222, 250, { scale: 0.33 });
   }
 
 
   // Col 3
-  if (req.body.titlecleared) {
-    doc.image('./img/checkbox.jpg', 420, 307, { scale: 0.33 });
+  if (req.body.titlecleared !== 'undefined') {
+    doc.image('./img/checkbox.jpg', 420, 297, { scale: 0.33 });
   }
   
-  if (req.body.titlerecd) {
-    doc.image('./img/checkbox.jpg', 420, 283, { scale: 0.33 });
+  if (req.body.titlerecd !== 'undefined') {
+    doc.image('./img/checkbox.jpg', 420, 273, { scale: 0.33 });
   }
   
-  if (req.body.titleordered) {
-    doc.image('./img/checkbox.jpg', 420, 260, { scale: 0.33 });
+  if (req.body.titleordered !== 'undefined') {
+    doc.image('./img/checkbox.jpg', 420, 250, { scale: 0.33 });
   }
 
 
