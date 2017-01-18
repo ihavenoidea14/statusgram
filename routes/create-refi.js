@@ -31,7 +31,17 @@ router.post('/', function(req, res) {
   * 
   */
 
-  doc.image('./img/closed.jpg', 16, 88, { scale: 0.24066 });
+  var status = {
+    14: './img/closed.jpg',
+    17: './img/docs-sent.jpg',
+    54: './img/ctc.jpg',
+    5: './img/cond-approved.jpg',
+    3: './img/in-underwriting.jpg'
+  };
+
+  var image = status[req.body.loanstatus] || './img/app-taken.jpg';
+
+  doc.image(image, 16, 88, { scale: 0.24066 });
 
 
   /*
@@ -53,7 +63,7 @@ router.post('/', function(req, res) {
   */
 
   doc.fontSize(12).fillColor('#004990')
-    .text('Hi ' + req.body.name + ', it\'s our pleasure to finance your purchase with a ' + req.body.morttype + ' Loan.', 43, 142);
+    .text(`Hi ${req.body.name}, it's our pleasure to finance your purchase with a ${req.body.morttype}.`, 43, 142);
 
 
   /*
@@ -65,43 +75,43 @@ router.post('/', function(req, res) {
 
   // Col 1
   if (req.body.appraisalcleared) {
-    doc.image('./img/checkbox.jpg', 25, 297, { scale: 0.33 });
+    doc.image('./img/checkbox.jpg', 25, 307, { scale: 0.33 });
   }
   
   if (req.body.appraisalrecd) {
-    doc.image('./img/checkbox.jpg', 25, 273, { scale: 0.33 });
+    doc.image('./img/checkbox.jpg', 25, 283, { scale: 0.33 });
   }
   
   if (req.body.appraisalordered) {
-    doc.image('./img/checkbox.jpg', 25, 250, { scale: 0.33 });
+    doc.image('./img/checkbox.jpg', 25, 260, { scale: 0.33 });
   }
 
 
   // Col 2
   if (req.body.hazcleared) {
-    doc.image('./img/checkbox.jpg', 222, 297, { scale: 0.33 });
+    doc.image('./img/checkbox.jpg', 222, 307, { scale: 0.33 });
   }
   
   if (req.body.hazrecd) {
-    doc.image('./img/checkbox.jpg', 222, 273, { scale: 0.33 });
+    doc.image('./img/checkbox.jpg', 222, 283, { scale: 0.33 });
   }
   
   if (req.body.hazordered) {
-    doc.image('./img/checkbox.jpg', 222, 250, { scale: 0.33 });
+    doc.image('./img/checkbox.jpg', 222, 260, { scale: 0.33 });
   }
 
 
   // Col 3
   if (req.body.titlecleared) {
-    doc.image('./img/checkbox.jpg', 420, 297, { scale: 0.33 });
+    doc.image('./img/checkbox.jpg', 420, 307, { scale: 0.33 });
   }
   
   if (req.body.titlerecd) {
-    doc.image('./img/checkbox.jpg', 420, 273, { scale: 0.33 });
+    doc.image('./img/checkbox.jpg', 420, 283, { scale: 0.33 });
   }
   
   if (req.body.titleordered) {
-    doc.image('./img/checkbox.jpg', 420, 250, { scale: 0.33 });
+    doc.image('./img/checkbox.jpg', 420, 260, { scale: 0.33 });
   }
 
 
@@ -125,7 +135,7 @@ router.post('/', function(req, res) {
   */
 
   doc.fontSize(8).fillColor('#004990')
-    .text('For your protection and ours, the u/w is now (or will be shortly) reviewing this report for accuracy and to validate the appraiser\'s opinion of value.', 25, 215, { width: 174, align: 'left' });
+    .text(`For your protection and ours, the u/w is now (or will be shortly) reviewing this report for accuracy and to validate the appraiser's opinion of value.`, 25, 215, { width: 174, align: 'left' });
   doc.text(req.body.appraiser, 23, 340, { width: 170, align: 'center' });
 
 
@@ -149,7 +159,7 @@ router.post('/', function(req, res) {
   */
 
   doc.fontSize(8).fillColor('#004990')
-    .text('To protect your investment and ours, we are making sure your coverage is sufficient.', 222, 215, { width: 174, align: 'left' });
+    .text(`To protect your investment and ours, we are making sure your coverage is sufficient.`, 222, 215, { width: 174, align: 'left' });
   doc.text(req.body.hazco, 222, 340, { width: 170, align: 'center' });
   doc.text(req.body.hazconame, 265, 377);
   doc.text(req.body.hazcophone, 265, 387);
@@ -176,7 +186,7 @@ router.post('/', function(req, res) {
   */
 
   doc.fontSize(8).fillColor('#004990')
-    .text('We are currently dotting the I\'s and crossing the T\'s for your ownership docs.', 418, 215, { width: 174, align: 'left' });
+    .text(`We are currently dotting the I's and crossing the T's for your ownership docs.`, 418, 215, { width: 174, align: 'left' });
   doc.text(req.body.titleco, 418, 340, { width: 170, align: 'center' });
   doc.text(req.body.titleconame, 460, 377, { lineBreak: false });
   doc.text(req.body.titlecophone, 460, 387, { lineBreak: false });
@@ -202,10 +212,22 @@ router.post('/', function(req, res) {
   */
 
   doc.fontSize(8).fillColor('#004990')
-    .text(formatter.format(req.body.propprice), 420, 590);
-  doc.text(new Date(req.body.propclosing).toLocaleDateString(), 500, 590, { lineBreak: false });
-  doc.text(req.body.propintrate, 420, 623);
-  doc.text(new Date(req.body.proplockexp).toLocaleDateString(), 500, 623, { lineBreak: false });
+
+  if (req.body.propprice !== 'undefined') {
+    doc.text(formatter.format(req.body.propprice), 420, 590);
+  }
+    
+  if (req.body.propclosing !== 'undefined') {
+    doc.text(new Date(req.body.propclosing).toLocaleDateString(), 500, 590, { lineBreak: false });
+  }
+    
+  if (req.body.propintrate !== 'undefined') {
+    doc.text(`${req.body.propintrate} %`, 420, 623);
+  }
+
+  if (req.body.proplockexp !== 'undefined') {
+    doc.text(new Date(req.body.proplockexp).toLocaleDateString(), 500, 623, { lineBreak: false });
+  }
 
 
   /*
@@ -217,7 +239,7 @@ router.post('/', function(req, res) {
 
   doc.fontSize(8).fillColor('#004990')
     .text(req.body.loname, 72, 595);
-  doc.text('NMLS: ' + req.body.lonmls, 72, 605);
+  doc.text(`NMLS: ${req.body.lonmls}`, 72, 605);
   doc.text(req.body.lophone, 72, 615);
   doc.text(req.body.loemail, 72, 625);
 
@@ -232,7 +254,7 @@ router.post('/', function(req, res) {
 
   doc.fontSize(8).fillColor('#004990')
     .text(req.body.rhpname, 265, 595);
-  doc.text('NMLS: ' + req.body.rhpnmls, 265, 605);
+  doc.text(`NMLS: ${req.body.rhpnmls}`, 265, 605);
   doc.text(req.body.rhpphone, 265, 615);
   doc.text(req.body.rhpemail, 265, 625);
 
@@ -246,8 +268,8 @@ router.post('/', function(req, res) {
 
   doc.fontSize(10).fillColor('#004990')
     .text(req.body.userinfoname, 165, 725, { width: 300, height: 10, align: 'center', lineBreak: false });
-  doc.text('Phone: ' + req.body.userinfophone, 165, 739, { width: 300, height: 10, align: 'center', lineBreak: false });
-  doc.text('NMLS# ' + req.body.userinfonmls, 165, 753, { width: 300, height: 10, align: 'center', lineBreak: false });
+  doc.text(`Phone: ${req.body.userinfophone}`, 165, 739, { width: 300, height: 10, align: 'center', lineBreak: false });
+  doc.text(`NMLS# ${req.body.userinfonmls}`, 165, 753, { width: 300, height: 10, align: 'center', lineBreak: false });
 
   doc.save();
   doc.end();

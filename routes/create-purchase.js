@@ -22,16 +22,33 @@ router.post('/', function(req, res) {
   /*
   * Loan Status Ribbon
   *
-  * Closed: http://www.atlanticbay.com/wp-content/uploads/statusgram/Closed-LSM.jpg
-  * Docs Sent: http://www.atlanticbay.com/wp-content/uploads/statusgram/Documents_Sent-LSM.jpg
-  * CTC: http://www.atlanticbay.com/wp-content/uploads/statusgram/Clear_To_Close-LSM.jpg
+  * Closed (14) : http://www.atlanticbay.com/wp-content/uploads/statusgram/Closed-LSM.jpg
+  * Docs Sent (17) : http://www.atlanticbay.com/wp-content/uploads/statusgram/Documents_Sent-LSM.jpg
+  * CTC (: http://www.atlanticbay.com/wp-content/uploads/statusgram/Clear_To_Close-LSM.jpg
   * Cond. Approved: http://www.atlanticbay.com/wp-content/uploads/statusgram/Conditionally_Approved-LSM.jpg
   * In Underwriting: http://www.atlanticbay.com/wp-content/uploads/statusgram/Submitted_To_Underwriting-LSM.jpg
   * App. Taken: http://www.atlanticbay.com/wp-content/uploads/statusgram/Application_Taken-LSM.jpg
   * 
+  * Closed -> ExtendedFields.Status_Finance_Funded_Date || Status.LoanStatus = 14
+  * Docs Sent -> Status.LoanStatus = 17
+  * CTC -> Status.LoanStatus = 54
+  * Cond. Approved -> Status.LoanStatus = 5
+  * Sub. To Und. -> Status.LoanStatus = 3
+  * App Taken -> Status.LoanStatus = Default  
+  *
   */
 
-  doc.image('./img/closed.jpg', 16, 88, { scale: 0.24066 });
+  var status = {
+    14: './img/closed.jpg',
+    17: './img/docs-sent.jpg',
+    54: './img/ctc.jpg',
+    5: './img/cond-approved.jpg',
+    3: './img/in-underwriting.jpg'
+  };
+
+  var image = status[req.body.loanstatus] || './img/app-taken.jpg';
+
+  doc.image(image, 16, 88, { scale: 0.24066 });
 
 
   /*

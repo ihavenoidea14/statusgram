@@ -31,7 +31,17 @@ router.post('/', function(req, res) {
   * 
   */
 
-  doc.image('./img/closed.jpg', 16, 88, { scale: 0.24066 });
+  var status = {
+    14: './img/closed.jpg',
+    17: './img/docs-sent.jpg',
+    54: './img/ctc.jpg',
+    5: './img/cond-approved.jpg',
+    3: './img/in-underwriting.jpg'
+  };
+
+  var image = status[req.body.loanstatus] || './img/app-taken.jpg';
+
+  doc.image(image, 16, 88, { scale: 0.24066 });
 
 
   /*
