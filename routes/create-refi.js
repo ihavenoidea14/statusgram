@@ -57,7 +57,7 @@ router.post('/', function(req, res) {
   */
 
   doc.fontSize(7).fillColor('#004990')
-    .text(req.body.loanNumber, 552, 45, { lineBreak: false });
+    .text(req.body.loanNumber, 557, 45, { lineBreak: false });
 
 
   /*
@@ -80,43 +80,43 @@ router.post('/', function(req, res) {
 
   // Col 1
   if (req.body.appraisalcleared !== 'undefined') {
-    doc.image('./img/checkbox.jpg', 25, 297, { scale: 0.33 });
+    doc.image('./img/checkbox.jpg', 25, 307, { scale: 0.33 });
   }
   
   if (req.body.appraisalrecd !== 'undefined') {
-    doc.image('./img/checkbox.jpg', 25, 273, { scale: 0.33 });
+    doc.image('./img/checkbox.jpg', 25, 283, { scale: 0.33 });
   }
   
   if (req.body.appraisalordered !== 'undefined') {
-    doc.image('./img/checkbox.jpg', 25, 250, { scale: 0.33 });
+    doc.image('./img/checkbox.jpg', 25, 260, { scale: 0.33 });
   }
 
 
   // Col 2
   if (req.body.hazcleared !== 'undefined') {
-    doc.image('./img/checkbox.jpg', 222, 297, { scale: 0.33 });
+    doc.image('./img/checkbox.jpg', 222, 307, { scale: 0.33 });
   }
   
   if (req.body.hazrecd !== 'undefined') {
-    doc.image('./img/checkbox.jpg', 222, 273, { scale: 0.33 });
+    doc.image('./img/checkbox.jpg', 222, 283, { scale: 0.33 });
   }
   
   if (req.body.hazordered !== 'undefined') {
-    doc.image('./img/checkbox.jpg', 222, 250, { scale: 0.33 });
+    doc.image('./img/checkbox.jpg', 222, 260, { scale: 0.33 });
   }
 
 
   // Col 3
   if (req.body.titlecleared !== 'undefined') {
-    doc.image('./img/checkbox.jpg', 420, 297, { scale: 0.33 });
+    doc.image('./img/checkbox.jpg', 420, 307, { scale: 0.33 });
   }
   
   if (req.body.titlerecd !== 'undefined') {
-    doc.image('./img/checkbox.jpg', 420, 273, { scale: 0.33 });
+    doc.image('./img/checkbox.jpg', 420, 283, { scale: 0.33 });
   }
   
   if (req.body.titleordered !== 'undefined') {
-    doc.image('./img/checkbox.jpg', 420, 250, { scale: 0.33 });
+    doc.image('./img/checkbox.jpg', 420, 260, { scale: 0.33 });
   }
 
 
@@ -139,8 +139,20 @@ router.post('/', function(req, res) {
   * 
   */
 
+  var appraisalText;
+
+  if (req.body.appraisalcleared !== 'undefined') {
+    appraisalText = `Great News! The appraisal is complete and has been validated. The appraised value is {appraised value}`;
+  } else if (req.body.appraisalrecd !== 'undefined') {
+    appraisalText = `For your protection and ours, the u/w is now (or will be shortly) reviewing this report for accuracy and to validate the appraiser's opinion of value.`;
+  } else if (req.body.appraisalordered !== 'undefined') {
+    appraisalText = `The appraiser will be contacting the agent or seller to schedule the onsite review of this property.`;
+  } else {
+    appraisalText = `We will assign the appraiser to schedule the onsite review of this property as soon as you are ready to move forward.`;
+  }
+
   doc.fontSize(8).fillColor('#004990')
-    .text(`For your protection and ours, the u/w is now (or will be shortly) reviewing this report for accuracy and to validate the appraiser's opinion of value.`, 25, 215, { width: 174, align: 'left' });
+    .text(appraisalText, 25, 215, { width: 174, align: 'left' });
   doc.text(req.body.appraiser, 23, 340, { width: 170, align: 'center' });
 
 
@@ -163,8 +175,21 @@ router.post('/', function(req, res) {
   *
   */
 
+  var hazText;
+
+  if (req.body.hazcleared !== 'undefined') {
+    hazText = `Great News! You're covered.`;
+  } else if (req.body.hazrecd !== 'undefined') {
+    hazText = `To protect your investment and ours, we are making sure your coverage is sufficient.`;
+  } else if (req.body.hazordered) {
+    hazText = `Thank you for providing your choice. We are working with your agent now.`;
+  } else {
+    hazText = `TIME SENSITIVE - It's your choice! Don't know? We can help.`;
+  }
+
+
   doc.fontSize(8).fillColor('#004990')
-    .text(`To protect your investment and ours, we are making sure your coverage is sufficient.`, 222, 215, { width: 174, align: 'left' });
+    .text(hazText, 222, 215, { width: 174, align: 'left' });
   doc.text(req.body.hazco, 222, 340, { width: 170, align: 'center' });
   doc.text(req.body.hazconame, 265, 377);
   doc.text(req.body.hazcophone, 265, 387);
@@ -190,8 +215,20 @@ router.post('/', function(req, res) {
   *
   */
 
+  var titleText;
+
+  if (req.body.titlecleared !== 'undefined') {
+    titleText = `Great News! Your closing company and settlement docs are approved.`;
+  } else if (req.body.titlerecd) {
+    titleText = `We are currently dotting the I's and crossing the T's for your ownership docs.`;
+  } else if (req.body.titleordered !== 'undefined') {
+    titleText = `Thank you for making your choice. We are working with your closing company now.`;
+  } else {
+    titleText = `It's your choice! Not sure? We have excellent options.`;
+  }
+
   doc.fontSize(8).fillColor('#004990')
-    .text(`We are currently dotting the I's and crossing the T's for your ownership docs.`, 418, 215, { width: 174, align: 'left' });
+    .text(titleText, 418, 215, { width: 174, align: 'left' });
   doc.text(req.body.titleco, 418, 340, { width: 170, align: 'center' });
   doc.text(req.body.titleconame, 460, 377, { lineBreak: false });
   doc.text(req.body.titlecophone, 460, 387, { lineBreak: false });

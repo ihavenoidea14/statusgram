@@ -28,13 +28,6 @@ router.post('/', function(req, res) {
   * Cond. Approved: http://www.atlanticbay.com/wp-content/uploads/statusgram/Conditionally_Approved-LSM.jpg
   * In Underwriting: http://www.atlanticbay.com/wp-content/uploads/statusgram/Submitted_To_Underwriting-LSM.jpg
   * App. Taken: http://www.atlanticbay.com/wp-content/uploads/statusgram/Application_Taken-LSM.jpg
-  * 
-  * Closed -> ExtendedFields.Status_Finance_Funded_Date || Status.LoanStatus = 14
-  * Docs Sent -> Status.LoanStatus = 17
-  * CTC -> Status.LoanStatus = 54
-  * Cond. Approved -> Status.LoanStatus = 5
-  * Sub. To Und. -> Status.LoanStatus = 3
-  * App Taken -> Status.LoanStatus = Default  
   *
   */
 
@@ -64,7 +57,7 @@ router.post('/', function(req, res) {
   */
 
   doc.fontSize(7).fillColor('#004990')
-    .text(req.body.loanNumber, 552, 45, { lineBreak: false });
+    .text(req.body.loanNumber, 557, 45, { lineBreak: false });
 
 
   /*
@@ -146,8 +139,20 @@ router.post('/', function(req, res) {
   * 
   */
 
+  var appraisalText;
+
+  if (req.body.appraisalcleared !== 'undefined') {
+    appraisalText = `Great News! The appraisal is complete and has been validated. The appraised value is {appraised value}`;
+  } else if (req.body.appraisalrecd !== 'undefined') {
+    appraisalText = `For your protection and ours, the u/w is now (or will be shortly) reviewing this report for accuracy and to validate the appraiser's opinion of value.`;
+  } else if (req.body.appraisalordered !== 'undefined') {
+    appraisalText = `The appraiser will be contacting the agent or seller to schedule the onsite review of this property.`;
+  } else {
+    appraisalText = `We will assign the appraiser to schedule the onsite review of this property as soon as you are ready to move forward.`;
+  }
+
   doc.fontSize(8).fillColor('#004990')
-    .text('For your protection and ours, the u/w is now (or will be shortly) reviewing this report for accuracy and to validate the appraiser\'s opinion of value.', 25, 206, { width: 174, align: 'left' });
+    .text(appraisalText, 25, 206, { width: 174, align: 'left' });
   doc.text(req.body.appraiser, 25, 330, { width: 170, align: 'center' });
 
 
@@ -170,8 +175,20 @@ router.post('/', function(req, res) {
   *
   */
 
+  var hazText;
+
+  if (req.body.hazcleared !== 'undefined') {
+    hazText = `Great News! You're covered.`;
+  } else if (req.body.hazrecd !== 'undefined') {
+    hazText = `To protect your investment and ours, we are making sure your coverage is sufficient.`;
+  } else if (req.body.hazordered) {
+    hazText = `Thank you for providing your choice. We are working with your agent now.`;
+  } else {
+    hazText = `TIME SENSITIVE - It's your choice! Don't know? We can help.`;
+  }
+
   doc.fontSize(8).fillColor('#004990')
-    .text('To protect your investment and ours, we are making sure your coverage is sufficient.', 222, 206, { width: 174, align: 'left' });
+    .text(hazText, 222, 206, { width: 174, align: 'left' });
   doc.text(req.body.hazco, 222, 330, { width: 170, align: 'center' });
   doc.text(req.body.hazconame, 265, 367);
   doc.text(req.body.hazcophone, 265, 377);
@@ -197,8 +214,20 @@ router.post('/', function(req, res) {
   *
   */
 
+  var titleText;
+
+  if (req.body.titlecleared !== 'undefined') {
+    titleText = `Great News! Your closing company and settlement docs are approved.`;
+  } else if (req.body.titlerecd) {
+    titleText = `We are currently dotting the I's and crossing the T's for your ownership docs.`;
+  } else if (req.body.titleordered !== 'undefined') {
+    titleText = `Thank you for making your choice. We are working with your closing company now.`;
+  } else {
+    titleText = `It's your choice! Not sure? We have excellent options.`;
+  }
+
   doc.fontSize(8).fillColor('#004990')
-    .text('We are currently dotting the I\'s and crossing the T\'s for your ownership docs.', 418, 206, { width: 174, align: 'left' });
+    .text(titleText, 418, 206, { width: 174, align: 'left' });
   doc.text(req.body.titleco, 418, 330, { width: 170, align: 'center' });
   doc.text(req.body.titleconame, 460, 367, { lineBreak: false });
   doc.text(req.body.titlecophone, 460, 377, { lineBreak: false });
@@ -236,7 +265,7 @@ router.post('/', function(req, res) {
   }
 
   if (req.body.propintrate !== 'undefined') {
-    doc.text(req.body.propintrate + '%', 420, 527);
+    doc.text(`${req.body.propintrate} %`, 420, 527);
   }
 
   if (req.body.proplockexp !== 'undefined') {
@@ -253,7 +282,7 @@ router.post('/', function(req, res) {
 
   doc.fontSize(8).fillColor('#004990')
     .text(req.body.loname, 72, 605);
-  doc.text('NMLS: ' + req.body.lonmls, 72, 615);
+  doc.text(`NMLS: ${req.body.lonmls}`, 72, 615);
   doc.text(req.body.lophone, 72, 625);
   doc.text(req.body.loemail, 72, 635);
 
@@ -268,7 +297,7 @@ router.post('/', function(req, res) {
 
   doc.fontSize(8).fillColor('#004990')
     .text(req.body.rhpname, 265, 605);
-  doc.text('NMLS: ' + req.body.rhpnmls, 265, 615);
+  doc.text(`NMLS: ${req.body.rhpnmls}`, 265, 615);
   doc.text(req.body.rhpphone, 265, 625);
   doc.text(req.body.rhpemail, 265, 635, { width: 135 });
 
@@ -296,8 +325,8 @@ router.post('/', function(req, res) {
 
   doc.fontSize(10).fillColor('#004990')
     .text(req.body.userinfoname, 165, 725, { width: 300, height: 10, align: 'center', lineBreak: false });
-  doc.text('Phone: ' + req.body.userinfophone, 165, 739, { width: 300, height: 10, align: 'center', lineBreak: false });
-  doc.text('NMLS# ' + req.body.userinfonmls, 165, 753, { width: 300, height: 10, align: 'center', lineBreak: false });
+  doc.text(`Phone: ${req.body.userinfophone}`, 165, 739, { width: 300, height: 10, align: 'center', lineBreak: false });
+  doc.text(`NMLS# ${req.body.userinfonmls}`, 165, 753, { width: 300, height: 10, align: 'center', lineBreak: false });
 
   doc.save();
 
