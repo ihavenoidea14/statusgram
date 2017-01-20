@@ -142,7 +142,7 @@ router.post('/', function(req, res) {
   var appraisalText;
 
   if (req.body.appraisalcleared !== 'undefined') {
-    appraisalText = `Great News! The appraisal is complete and has been validated. The appraised value is {appraised value}`;
+    appraisalText = `Great News! The appraisal is complete and has been validated. The appraised value is ${formatter.format(req.body.appraisedvalue)}`;
   } else if (req.body.appraisalrecd !== 'undefined') {
     appraisalText = `For your protection and ours, the u/w is now (or will be shortly) reviewing this report for accuracy and to validate the appraiser's opinion of value.`;
   } else if (req.body.appraisalordered !== 'undefined') {
@@ -284,7 +284,8 @@ router.post('/', function(req, res) {
     .text(req.body.loname, 72, 605);
   doc.text(`NMLS: ${req.body.lonmls}`, 72, 615);
   doc.text(req.body.lophone, 72, 625);
-  doc.text(req.body.loemail, 72, 635);
+  doc.fontSize(6).fillColor('#004990')
+    .text(req.body.loemail, 72, 635);
 
 
   /*
@@ -299,7 +300,8 @@ router.post('/', function(req, res) {
     .text(req.body.rhpname, 265, 605);
   doc.text(`NMLS: ${req.body.rhpnmls}`, 265, 615);
   doc.text(req.body.rhpphone, 265, 625);
-  doc.text(req.body.rhpemail, 265, 635, { width: 135 });
+  doc.fontSize(6).fillColor('#004990')
+    .text(req.body.rhpemail, 265, 635, { width: 135 });
 
 
   /*

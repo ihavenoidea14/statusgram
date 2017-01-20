@@ -68,7 +68,7 @@ router.post('/', function(req, res) {
   */
 
   doc.fontSize(12).fillColor('#004990')
-    .text(`Hi ${req.body.name}, it's our pleasure to finance your purchase with a ${req.body.morttype}.`, 43, 142);
+    .text(`Hi ${req.body.name}, it's our pleasure to finance your purchase with ${req.body.morttype}.`, 43, 142);
 
 
   /*
@@ -142,7 +142,7 @@ router.post('/', function(req, res) {
   var appraisalText;
 
   if (req.body.appraisalcleared !== 'undefined') {
-    appraisalText = `Great News! The appraisal is complete and has been validated. The appraised value is {appraised value}`;
+    appraisalText = `Great News! The appraisal is complete and has been validated. The appraised value is ${formatter.format(req.body.appraisedvalue)}`;
   } else if (req.body.appraisalrecd !== 'undefined') {
     appraisalText = `For your protection and ours, the u/w is now (or will be shortly) reviewing this report for accuracy and to validate the appraiser's opinion of value.`;
   } else if (req.body.appraisalordered !== 'undefined') {
